@@ -4,5 +4,6 @@ Java 8u192
 
 ### HOW TO USE
 
-ex
+ex  
+
 `$ java TSP 5`
