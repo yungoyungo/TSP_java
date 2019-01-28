@@ -3,9 +3,11 @@ import java.math.BigInteger;
 import java.util.LinkedList;
 
 public class TSP {
+
+    static double minMileage = Double.POSITIVE_INFINITY;
     public static void main(String[] args) {
-        //int num_cities = Integer.parseInt(args[0]);
-        int num_cities = 5;
+        int num_cities = Integer.parseInt(args[0]);
+        //int num_cities = 5;
         Point[] points = new Point[num_cities];
         for (int i = 0; i < num_cities; i++) {
             points[i] = new Point((int) (Math.random() * 100), (int) (Math.random() * 100));
@@ -17,8 +19,9 @@ public class TSP {
         //System.out.println("total : " + AtoZDistance(points));
 
         String num_paths = getPathsNum(new BigInteger(String.valueOf(num_cities - 1))).toString();
-        System.out.println("all paths: " + num_paths);
-        gen_path_all(num_cities);
+        startRoundRobin(points, num_cities);
+        System.out.println("all paths: " + Integer.parseInt(num_paths)/2);
+        System.out.println("minimal : "+TSP.minMileage);
     }
 
     // distance標準であるから使わないぞ（作った後に気付く）
@@ -27,44 +30,30 @@ public class TSP {
         return distance;
     }
 
-    public static double AtoZDistance(Point[] points) {
-        double total = 0;
-        double tmp;
-        int i = 0;
-        for (; i + 1 < points.length; i++) {
-            // total = total + p2p_distance(points[i], points[i+1]);
-            tmp = points[i].distance(points[i + 1]);
-            // System.out.println("dist: "+tmp);
-            total = total + tmp;
-        }
-        // マサラタウンに帰る
-        tmp = points[i].distance(points[0]);
-        // System.out.println("dist: "+tmp);
-        total = total + tmp;
-        return total;
-    }
-
-    public static void gen_path_all(int num_cities){
+    public static void startRoundRobin(Point[] points,int num_cities){
         int x = 2;
         LinkedList<Integer> route_ary = new LinkedList<Integer>();
         for(; x <= num_cities; x++){
             route_ary.add(x);
             route_ary.add(1);
-            gen_path_subloop_all(num_cities, 2, route_ary);
+            startRoundRobin_subloop(points, num_cities, 2, route_ary);
             route_ary.clear();
         }
     }
-    private static void gen_path_subloop_all(int num_cities,int n,LinkedList<Integer> route_ary){
+    private static void startRoundRobin_subloop(Point[] points, int num_cities,int n,LinkedList<Integer> route_ary){
         if(n == num_cities){
-            System.out.println(route_ary);
-            getMileage(route_ary);
+            double minimal_tmp = getMileage(points, route_ary);
+            if(TSP.minMileage > minimal_tmp){
+                TSP.minMileage = minimal_tmp;
+            }
+            //System.out.println("minimal : "+TSP.minMileage);
         }
         else{
             for(int x=2; x <= num_cities; x++){
                 if(!(route_ary.contains(x))){
                     if( n != 2 || (int)route_ary.getFirst() > x ){
                         route_ary.add(x);
-                        gen_path_subloop_all(num_cities, n+1, route_ary);
+                        startRoundRobin_subloop(points, num_cities, n+1, route_ary);
                         route_ary.removeLast();
                     }
                 }
@@ -79,8 +68,17 @@ public class TSP {
         return bi.multiply(getPathsNum(bi.subtract(new BigInteger("1"))));
     }
 
-    public static double getMileage(LinkedList<Integer> route_ary){
+    public static double getMileage(Point[] points, LinkedList<Integer> route_ary){
         double mileage = 0;
+        int i = 0;
+        for (; i+1 < points.length; i++) {
+            //System.out.println(route_ary.get(i)+" - "+route_ary.get(i+1)+" : "+tmp);
+            mileage += points[route_ary.get(i)-1].distance(points[route_ary.get(i+1)-1]);
+        }
+        // マサラタウンに帰る
+        //System.out.println(route_ary.get(i)+" - "+route_ary.get(0)+" : "+tmp);
+        mileage += points[route_ary.get(i)-1].distance(points[route_ary.get(0)-1]);
+        System.out.println("mile: "+mileage);
         return mileage;
     }
 }
