@@ -10,16 +10,24 @@ Java 8u192
 
 ### HOW TO USE
 
-ex. 6つの都市を回るぞ(60通り)  
+ex. 12の都市を回るぞ 
 
 ```
-$ java TSP 6
-java.awt.Point[x=734,y=6270]
-java.awt.Point[x=8571,y=6761]
-java.awt.Point[x=7742,y=2227]
-java.awt.Point[x=8046,y=7723]
-java.awt.Point[x=8957,y=4244]
-java.awt.Point[x=8079,y=6689]
-all paths: 60
-minimal : 21978.4467543496
+$ time java TSP 12
+java.awt.Point[x=1,y=9902]
+java.awt.Point[x=15,y=2731]
+java.awt.Point[x=7096,y=4558]
+java.awt.Point[x=8204,y=1696]
+java.awt.Point[x=6714,y=8233]
+java.awt.Point[x=6003,y=9123]
+java.awt.Point[x=4028,y=1922]
+java.awt.Point[x=160,y=4206]
+java.awt.Point[x=9243,y=838]
+java.awt.Point[x=297,y=4179]
+java.awt.Point[x=225,y=9660]
+java.awt.Point[x=5225,y=6080]
+####
+minimal : 33451.121176488996
+java TSP 12  12.64s user 0.22s system 98% cpu 13.107 total
+[yusa@h78]$                                         [/Users/yus
 ```
