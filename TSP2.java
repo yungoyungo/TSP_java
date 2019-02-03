@@ -6,12 +6,12 @@ public class TSP2 {
 
     static double minMileage = Double.POSITIVE_INFINITY;
     static int progress = 0;
+    static double[][] cityDistances = new double[32][32];
 
     public static void main(String[] args) {
         int num_cities = Integer.parseInt(args[0]);
         // int num_cities = 14;
         Point[] cityLocations = new Point[num_cities];
-        double[][] cityDistances = new double[num_cities][num_cities];
         for (int i = 0; i < num_cities; i++) {
             // 10000 * 10000 平面内のランダムな1点
             cityLocations[i] = new Point((int) (Math.random() * 10000), (int) (Math.random() * 10000));
@@ -41,28 +41,27 @@ public class TSP2 {
                 System.out.println("都市数が2以上のときに計算します");
             }
         }
-        startRoundRobin(cityDistances, num_cities);
+        startRoundRobin(num_cities);
         System.out.println("minimal : " + TSP2.minMileage);
     }
 
-    public static void startRoundRobin(double[][] cityDistances, int num_cities) {
+    public static void startRoundRobin(int num_cities) {
         int x = 2;
         LinkedList<Integer> routeAry = new LinkedList<Integer>();
         for (; x <= num_cities; x++) {
             routeAry.add(x);
             routeAry.add(1);
-            startRoundRobin_subloop(cityDistances, num_cities, 2, routeAry);
+            startRoundRobin_subloop(num_cities, 2, routeAry);
             routeAry.clear();
         }
         System.out.println("");
     }
 
-    private static void startRoundRobin_subloop(double[][] cityDistances, int num_cities, int n,
-            LinkedList<Integer> routeAry) {
+    private static void startRoundRobin_subloop(int num_cities, int n, LinkedList<Integer> routeAry) {
         if (n == num_cities) {
             // System.out.println(routeAry);
             // 生成したルートでの総距離を取得
-            double minimal_tmp = getMileage(cityDistances, routeAry);
+            double minimal_tmp = getMileage(routeAry);
             if (TSP2.minMileage > minimal_tmp) {
                 TSP2.minMileage = minimal_tmp;
             }
@@ -77,7 +76,7 @@ public class TSP2 {
                 if (!(routeAry.contains(x))) {
                     if (n != 2 || (int) routeAry.getFirst() > x) {
                         routeAry.add(x);
-                        startRoundRobin_subloop(cityDistances, num_cities, n + 1, routeAry);
+                        startRoundRobin_subloop(num_cities, n + 1, routeAry);
                         routeAry.removeLast();
                     }
                 }
@@ -85,10 +84,10 @@ public class TSP2 {
         }
     }
 
-    public static double getMileage(double[][] cityDistances, LinkedList<Integer> routeAry) {
+    public static double getMileage(LinkedList<Integer> routeAry) {
         double mileage = 0;
         int i = 0;
-        for (; i + 1 < cityDistances.length; i++) {
+        for (; i + 1 < routeAry.size(); i++) {
             mileage += cityDistances[routeAry.get(i) - 1][routeAry.get(i + 1) - 1];
             // System.out.println("mil:" + mileage);
         }

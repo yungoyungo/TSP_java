@@ -15,7 +15,9 @@ TSPのほうは毎回Point2Dクラスのdistanceメソッドを使って距離�
 しかしこれ何回も同じ組み合わせでdistance使ってるんじゃないか？と思い事前に全ての距離を計算，cityDistance[][]配列に格納しておき，
 そこから引き出す方式を採用しました，それがTSP2  
 
-肝心の実行時間ですが，あまり変わりませんでした.
+肝心の実行時間ですが，あまり変わりませんでした.  
+`java TSP 13  155.89s user 1.10s system 98% cpu 2:39.00 total`
+`java TSP2 13  142.32s user 0.71s system 99% cpu 2:23.84 total`
 
 ### HOW TO USE
 
