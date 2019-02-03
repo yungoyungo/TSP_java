@@ -6,6 +6,10 @@ public class TSP2 {
 
     static double minMileage = Double.POSITIVE_INFINITY;
     static int progress = 0;
+    /*
+     * 都市[0]と都市[1]の距離をcityDistance[0][1]に格納，みたいな cityDistance[0][1] ==
+     * cityDistance[1][0]とか cityDistance[0][0] == 0とか不必要な部分がちらほら
+     */
     static double[][] cityDistances = new double[32][32];
 
     public static void main(String[] args) {
