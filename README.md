@@ -1,17 +1,17 @@
-## 巡回セールスマン問題（Travelling Salesman Problem）全探索解法
+# 巡回セールスマン問題（Travelling Salesman Problem）全探索解法
 
 Java 8u192
 
-### 何
-引数で指定した数の都市を10000 * 10000 平面状にランダムに配置，
+## 何
+引数で指定した数の都市を10000 * 10000 平面状にランダムに配置，  
 総当たり的に最短ルートを探索します．爆発的に増大するので注意  
 具体的には14都市超えたあたりから実行時間がとんでもないことになってくるはず  
-13都市なら多分3分くらい
+13都市なら多分3分くらい  
 
 400万パスに一回"#"を出力します
 
 ### TSP2
-TSPのほうは毎回Point2Dクラスのdistanceメソッドを使って距離を計算していました
+TSPのほうは毎回Point2Dクラスのdistanceメソッドを使って距離を計算していました  
 しかしこれ何回も同じ組み合わせでdistance使ってるんじゃないか？と思い事前に全ての距離を計算，cityDistance[][]配列に格納しておき，
 そこから引き出す方式を採用しました，それがTSP2  
 
@@ -19,7 +19,7 @@ TSPのほうは毎回Point2Dクラスのdistanceメソッドを使って距離�
 `java TSP 13  155.89s user 1.10s system 98% cpu 2:39.00 total`
 `java TSP2 13  142.32s user 0.71s system 99% cpu 2:23.84 total`
 
-### HOW TO USE
+## HOW TO USE
 
 ex. 12の都市を回るぞ 
 
@@ -40,5 +40,4 @@ java.awt.Point[x=5225,y=6080]
 ####
 minimal : 33451.121176488996
 java TSP 12  12.64s user 0.22s system 98% cpu 13.107 total
-[yusa@h78]$                                         [/Users/yus
 ```
