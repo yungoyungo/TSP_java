@@ -21,19 +21,22 @@ public class TSP {
         }
         // System.out.println("total : " + AtoZDistance(cityLocations));
 
+        // 14都市以下の場合，パス数を計算（14以上は無理なので）
+        if (num_cities < 14) {
+            String num_paths_str = getPathsNum(new BigInteger(String.valueOf(num_cities - 1))).toString();
+            int num_paths = Integer.parseInt(num_paths_str);
+            // 都市数が1以下の場合,パスが0になってしまうため（割とどうでも良い）
+            if (num_cities > 1) {
+                if (num_cities > 2) {
+                    num_paths /= 2;
+                }
+                System.out.println("all paths: " + num_paths);
+            } else {
+                System.out.println("都市数が2以上のときに計算します");
+            }
+        }
         startRoundRobin(cityLocations, num_cities);
         System.out.println("minimal : " + TSP.minMileage);
-
-        // 以下，14都市以上で使えないのでコメントアウト
-        /*
-         * String num_paths_str = getPathsNum(new BigInteger(String.valueOf(num_cities -
-         * 1))).toString(); int num_paths = Integer.parseInt(num_paths_str); //
-         * 都市数が1以下の場合,パスが0になってしまうため（割とどうでも良い） if (num_cities > 1) { if (num_cities > 2)
-         * { num_paths /= 2; } startRoundRobin(cityLocations, num_cities);
-         * System.out.println("all paths: " + num_paths);
-         * System.out.println("minimal : " + TSP.minMileage); } else {
-         * System.out.println("都市数が2以上のときに計算します"); }
-         */
     }
 
     public static void startRoundRobin(Point[] cityLocations, int num_cities) {
